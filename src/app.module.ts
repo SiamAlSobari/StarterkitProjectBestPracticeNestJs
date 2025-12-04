@@ -1,16 +1,28 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaModule } from './modules/prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    PrismaModule,
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (cfg: ConfigService) => ({
+        type: 'mysql', // bisa ganti postgres dll
+        host: cfg.get<string>('DB_HOST'),
+        port: cfg.get<number>('DB_PORT'),
+        username: cfg.get<string>('DB_USER'),
+        password: cfg.get<string>('DB_PASS'),
+        database: cfg.get<string>('DB_NAME'),
+        entities: [],
+        synchronize: true, // development only
+      }),
     }),
     AuthModule,
   ],
