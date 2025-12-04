@@ -11,8 +11,8 @@ export class AuthRepository {
         @InjectRepository(User)
         private readonly userRepo: Repository<User>,
 
-        @InjectRepository(Profile)
-        private readonly profileRepo: Repository<Profile>,
+        // @InjectRepository(Profile)
+        // private readonly profileRepo: Repository<Profile>,
     ) { }
 
     public async getUserByEmail(email: string) {

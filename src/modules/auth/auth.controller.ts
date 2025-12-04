@@ -9,19 +9,20 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto, ValidateUserDto } from './auth.dto';
 import { Response } from 'express';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 
 import { EmailVerifiedGuard } from 'src/common/guards/email-verified.guard';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  private async register(@Body() createUserDto: CreateUserDto) {
-    const user = await this.authService.register(createUserDto)
+  private async register(@Body() dto: RegisterDto) {
+    const user = await this.authService.register(dto);
     return {
       "success": true,
       "message": "User registered successfully",
@@ -31,10 +32,10 @@ export class AuthController {
 
   @Post('login')
   private async login(
-    @Body() validateUserDto: ValidateUserDto,
+    @Body() dto: LoginDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const { access_token } = await this.authService.login(validateUserDto);
+    const { access_token } = await this.authService.login(dto);
 
     // set cookie
     res.cookie('token', access_token, {
