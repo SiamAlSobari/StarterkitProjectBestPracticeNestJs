@@ -1,7 +1,8 @@
 import { Role } from 'src/common/enums/role.enum';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Profile } from './profile.entity';
 
-@Entity()
+@Entity('users')
 export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -10,7 +11,7 @@ export class User {
     email: string;
 
     @Column()
-    hash_password: string;
+    hashPassword: string;
 
     @Column({
         type: 'enum',
@@ -19,9 +20,13 @@ export class User {
     })
     role: Role
 
-    @CreateDateColumn({ name: 'created_at' })
-    created_at: Date;
+    @CreateDateColumn({ name: 'createdAt' })
+    createdAt: Date;
 
-    @UpdateDateColumn({ name: 'updated_at' })
-    updated_at: Date;
+    @UpdateDateColumn({ name: 'updatedAt' })
+    updatedAt: Date;
+
+    // Relasi Ke Profile
+    @OneToOne(() => Profile, (profile) => profile.user)
+    profile: Profile
 }
