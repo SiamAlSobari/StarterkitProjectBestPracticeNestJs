@@ -1,98 +1,424 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# 🚀 NestJS Starter Kit
 
-## Project setup
+Starter kit template lengkap untuk membangun REST API dengan NestJS. Template ini dilengkapi dengan fitur autentikasi, manajemen user, database, dan best practices untuk development yang cepat dan profesional.
 
-```bash
-$ npm install
+## 📋 Daftar Isi
+
+- [Fitur Utama](#fitur-utama)
+- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
+- [Struktur Folder](#struktur-folder)
+- [Instalasi & Setup](#instalasi--setup)
+- [Konfigurasi Environment](#konfigurasi-environment)
+- [Menjalankan Aplikasi](#menjalankan-aplikasi)
+- [Perintah Npm](#perintah-npm)
+- [Dokumentasi Fitur](#dokumentasi-fitur)
+- [Best Practices](#best-practices)
+
+---
+
+## ✨ Fitur Utama
+
+✅ **Autentikasi JWT** - Login dan register dengan token berbasis JWT  
+✅ **Role-Based Access Control (RBAC)** - Kontrol akses berdasarkan role pengguna  
+✅ **User Management** - Module untuk manajemen user dan profile  
+✅ **Database Integration** - Integrasi TypeORM dengan MySQL  
+✅ **Database Migration** - Sistem migration untuk versionisasi database  
+✅ **Validation & Guards** - Validasi input dengan class-validator dan guards  
+✅ **Environment Configuration** - Manajemen konfigurasi melalui .env  
+✅ **Linting & Code Format** - ESLint dan Prettier untuk code quality  
+✅ **Testing** - Setup untuk unit testing dan e2e testing dengan Jest  
+
+---
+
+## 🛠 Teknologi yang Digunakan
+
+### Core Framework
+- **NestJS v11** - Progressive Node.js framework untuk membangun aplikasi yang scalable
+- **TypeScript** - Superset dari JavaScript dengan static typing
+- **Express.js** - Web server framework (bawaan NestJS)
+
+### Database & ORM
+- **TypeORM v0.3** - ORM yang powerful untuk TypeScript/JavaScript
+- **MySQL v3** - Database relasional
+- **Prisma Client** - Query builder alternative (optional)
+
+### Authentication & Security
+- **JWT (JSON Web Tokens)** - Token-based authentication
+- **Bcrypt** - Password hashing untuk keamanan
+- **Cookie Parser** - Parsing cookies dari request
+
+### Validation & Data Transfer
+- **class-validator** - Validation decorator berbasis kelas
+- **class-transformer** - Transform plain objects ke class instances
+- **DTOs (Data Transfer Objects)** - Untuk standardisasi data input/output
+
+### Development Tools
+- **ESLint** - Linting untuk code quality
+- **Prettier** - Code formatter
+- **Jest** - Testing framework
+- **ts-node** - Eksekusi TypeScript langsung
+
+---
+
+## 📁 Struktur Folder
+
+```
+src/
+├── common/                      # Utilities, guards, enums, interfaces yang shared
+│   ├── enums/
+│   │   └── role.enum.ts        # Enum untuk role pengguna (USER, ADMIN, etc)
+│   ├── guards/
+│   │   ├── auth.guard.ts       # Guard untuk validasi JWT token
+│   │   ├── email-verified.guard.ts  # Guard untuk cek email verified
+│   │   └── role.guard.ts       # Guard untuk kontrol akses berdasarkan role
+│   └── interface/
+│       └── request.ts          # Custom Request interface
+│
+├── database/                    # Konfigurasi database & migrations
+│   ├── data-source.ts          # TypeORM data source configuration
+│   └── migrations/             # Folder untuk database migrations
+│
+├── entities/                    # Database entities (Model)
+│   ├── user.entity.ts          # Entity User
+│   └── profile.entity.ts       # Entity Profile (relasi ke User)
+│
+├── modules/                     # Feature modules
+│   ├── auth/                   # Authentication module
+│   │   ├── auth.controller.ts  # Endpoints login & register
+│   │   ├── auth.service.ts     # Business logic autentikasi
+│   │   ├── auth.module.ts      # Module configuration
+│   │   └── dto/
+│   │       ├── login.dto.ts    # DTO untuk login
+│   │       └── register.dto.ts # DTO untuk register
+│   │
+│   └── user/                   # User management module
+│       ├── user.module.ts      # Module configuration
+│       └── user.repository.ts  # Database operations
+│
+├── app.controller.ts           # Root controller
+├── app.service.ts              # Root service
+├── app.module.ts               # Root module - mengatur semua imports
+└── main.ts                     # Entry point aplikasi
+
+test/                           # Folder untuk testing
+├── app.e2e-spec.ts            # End-to-end testing
+└── jest-e2e.json              # Jest config untuk e2e tests
+
+.env                            # Environment variables (tidak di-commit)
+.env.example                    # Template untuk .env
 ```
 
-## Compile and run the project
+---
 
+## 📦 Instalasi & Setup
+
+### 1. Clone atau Download Repository
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/SiamAlSobari/StarterkitProjectBestPracticeNestJs.git
+cd backend/nest
 ```
 
-## Run tests
-
+### 2. Install Dependencies
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### 3. Buat File .env
 ```bash
-$ npm install -g mau
-$ mau deploy
+cp .env.example .env
+# atau buat manual file .env di root folder
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. Setup Database
+Buat database MySQL baru dengan nama sesuai `DB_NAME` di .env
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## ⚙️ Konfigurasi Environment
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Buat file `.env` di root folder dengan konfigurasi berikut:
 
-## Support
+```env
+# Server Configuration
+PORT=3000
+NODE_ENV=development
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Database Configuration
+DB_TYPE=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASS=password
+DB_NAME=starterkit_db
 
-## Stay in touch
+# JWT Configuration
+JWT_SECRET=your-super-secret-key-min-32-char-xxxxxxxxxxxxxxxxxx
+JWT_EXPIRATION=3d
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Email Configuration (Optional)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your-email@gmail.com
+MAIL_PASS=your-app-password
 
-## License
+# Application URLs
+APP_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:3000
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Penjelasan Konfigurasi:
+- **PORT** - Port aplikasi berjalan
+- **NODE_ENV** - Development, staging, atau production
+- **DB_*** - Konfigurasi koneksi database MySQL
+- **JWT_SECRET** - Secret key untuk signing JWT token (gunakan string panjang yang random)
+- **JWT_EXPIRATION** - Durasi token berlaku
+- **MAIL_*** - Konfigurasi email (untuk fitur email verification)
+
+---
+
+## 🚀 Menjalankan Aplikasi
+
+### Development Mode (dengan auto-reload)
+```bash
+npm run start:dev
+```
+Aplikasi berjalan di `http://localhost:3000`
+
+### Debug Mode
+```bash
+npm run start:debug
+```
+Untuk debugging dengan inspector, buka `chrome://inspect`
+
+### Production Build
+```bash
+npm run build
+npm run start:prod
+```
+
+---
+
+## 📝 Perintah NPM
+
+```bash
+# Development
+npm run start           # Menjalankan aplikasi sekali
+npm run start:dev      # Menjalankan dengan watch mode (auto-reload)
+npm run start:debug    # Debug dengan inspector
+
+# Database Migration
+npm run mg:gen         # Generate migration berdasarkan entity changes
+npm run mg:run         # Menjalankan pending migrations
+
+# Build & Production
+npm run build          # Build TypeScript ke JavaScript
+npm run start:prod     # Menjalankan production build
+
+# Code Quality
+npm run lint           # Cek dan fix ESLint issues
+npm run format         # Format code dengan Prettier
+
+# Testing
+npm test               # Menjalankan semua unit tests
+npm run test:watch    # Unit tests dengan watch mode
+npm run test:cov      # Unit tests dengan coverage report
+npm run test:debug    # Debug unit tests
+npm run test:e2e      # End-to-end tests
+```
+
+---
+
+## 📚 Dokumentasi Fitur
+
+### 1. Autentikasi (Auth Module)
+
+#### Register User
+```
+POST /auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "confirmPassword": "password123"
+}
+```
+
+Response:
+```json
+{
+  "id": "uuid-string",
+  "email": "user@example.com",
+  "role": "USER",
+  "createdAt": "2024-12-04T10:00:00Z"
+}
+```
+
+#### Login
+```
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+Response:
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIs...",
+  "user": {
+    "id": "uuid-string",
+    "email": "user@example.com",
+    "role": "USER"
+  }
+}
+```
+
+### 2. User Management
+
+#### Get User Profile (Protected)
+```
+GET /users/profile
+Authorization: Bearer <access_token>
+```
+
+#### Update Profile
+```
+PUT /users/profile
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "phoneNumber": "+6281234567890"
+}
+```
+
+### 3. Guards (Proteksi Endpoints)
+
+#### AuthGuard - Memastikan User Terautentikasi
+```typescript
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../common/guards/auth.guard';
+
+@Controller('users')
+@UseGuards(AuthGuard)
+export class UserController {
+  // Endpoint ini memerlukan JWT token yang valid
+}
+```
+
+#### RoleGuard - Memastikan User Memiliki Role yang Tepat
+```typescript
+import { UseGuards } from '@nestjs/common';
+import { RoleGuard } from '../common/guards/role.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/role.enum';
+
+@Controller('admin')
+@UseGuards(AuthGuard, RoleGuard)
+@Roles(Role.ADMIN)
+export class AdminController {
+  // Hanya ADMIN yang bisa akses
+}
+```
+
+### 4. Database Entities
+
+#### User Entity
+```typescript
+// src/entities/user.entity.ts
+@Entity('users')
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  hashPassword: string;
+
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
+  role: Role;
+
+  @CreateDateColumn({ name: 'createdAt' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updatedAt' })
+  updatedAt: Date;
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
+}
+```
+
+---
+
+## 🎯 Best Practices
+
+### 1. Struktur Kode
+- **Separation of Concerns** - Pisahkan logic di service, bukan di controller
+- **Modules** - Grup fitur-fitur terkait dalam satu module
+- **DTOs** - Gunakan DTOs untuk validasi input
+- **Guards** - Gunakan guards untuk autentikasi & autorisasi
+
+### 2. Database
+- **Migrations** - Selalu gunakan migration untuk perubahan schema
+- **Entities** - Define relationships dengan proper decorators
+- **Repositories** - Gunakan repository pattern untuk data access
+
+### 3. Security
+- **Hash Password** - Gunakan bcrypt untuk hash password
+- **Environment Variables** - Jangan hardcode secrets di code
+- **JWT Secret** - Gunakan string yang panjang dan random
+- **CORS** - Konfigurasi CORS dengan proper origin
+
+### 4. Testing
+- **Unit Tests** - Test business logic di service
+- **E2E Tests** - Test flow lengkap dari request hingga response
+- **Coverage** - Target coverage minimal 80%
+
+### 5. Code Quality
+- **ESLint** - Jalankan linter sebelum commit
+- **Prettier** - Format code konsisten
+- **Type Safety** - Manfaatkan TypeScript typing
+
+### 6. Environment
+- **Development** - Gunakan `npm run start:dev` untuk development
+- **Staging** - Setup testing environment sebelum production
+- **Production** - Gunakan `npm run build` dan `start:prod`
+
+---
+
+## 🔗 Resources & Links
+
+- [NestJS Documentation](https://docs.nestjs.com)
+- [TypeORM Documentation](https://typeorm.io)
+- [JWT Best Practices](https://tools.ietf.org/html/rfc7519)
+- [OWASP Security Guidelines](https://owasp.org)
+
+---
+
+## 📄 Lisensi
+
+UNLICENSED - Private Project
+
+---
+
+## 👤 Author
+
+Siam Al Sobari
+
+---
+
+**Happy Coding! 🎉**
+
+Untuk pertanyaan atau kontribusi, silakan buka issue atau pull request.
