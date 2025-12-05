@@ -30,6 +30,6 @@ export class User {
     updatedAt: Date;
 
     // Relasi Ke Profile
-    @OneToOne(() => Profile, profile => profile.user)
+    @OneToOne(() => Profile, profile => profile.user, { cascade: true })
     profile: Profile
 }
