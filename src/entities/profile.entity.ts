@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 
 @Entity('profiles')
@@ -6,6 +6,7 @@ export class Profile {
     @PrimaryGeneratedColumn('uuid')
     id : string
 
+    @Index()
     @Column()
     userId : string
 
@@ -23,7 +24,7 @@ export class Profile {
     image : string | null
 
     // Relasi OneToOne User
-    @OneToOne(() => User, (user) => user.profile,{
+    @OneToOne(() => User, user => user.profile,{
         onDelete: 'CASCADE'
     })
     @JoinColumn({ name: 'userId' })

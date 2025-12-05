@@ -1,13 +1,15 @@
 import { Role } from '../common/enums/role.enum';
 
-import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Profile } from './profile.entity';
 
 @Entity('users')
 export class User {
+
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Index()
     @Column({ unique: true })
     email: string;
 
@@ -28,6 +30,6 @@ export class User {
     updatedAt: Date;
 
     // Relasi Ke Profile
-    @OneToOne(() => Profile, (profile) => profile.user)
+    @OneToOne(() => Profile, profile => profile.user)
     profile: Profile
 }
